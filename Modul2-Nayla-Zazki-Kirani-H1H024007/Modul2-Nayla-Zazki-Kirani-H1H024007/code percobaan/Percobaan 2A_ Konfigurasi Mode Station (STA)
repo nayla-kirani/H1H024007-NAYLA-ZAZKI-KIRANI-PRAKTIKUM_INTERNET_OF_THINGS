@@ -1,0 +1,66 @@
+#include <ESP8266WiFi.h>
+
+// Identitas praktikan: Nayla Zazki Kirani (H1H024007)
+// Untuk pengujian, buat hotspot dengan SSID dan password berikut.
+const char* ssid     = "NAYLA_WIFI";
+const char* password = "NaylaIoT2026";
+
+const int ledPin = 2;
+const unsigned long connectTimeout = 15000;
+const unsigned long reconnectInterval = 5000;
+unsigned long lastReconnect = 0;
+
+bool connectWiFi() {
+  Serial.print("Menghubungkan ke WiFi: ");
+  Serial.println(ssid);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  unsigned long startTime = millis();
+  while (WiFi.status() != WL_CONNECTED && millis() - startTime < connectTimeout) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("WiFi berhasil terhubung!");
+    Serial.print("IP Address  : ");
+    Serial.println(WiFi.localIP());
+    Serial.print("MAC Address : ");
+    Serial.println(WiFi.macAddress());
+    Serial.print("RSSI (dBm)  : ");
+    Serial.println(WiFi.RSSI());
+    digitalWrite(ledPin, HIGH);
+    return true;
+  }
+
+  Serial.println("Koneksi gagal/timeout.");
+  digitalWrite(ledPin, LOW);
+  return false;
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, LOW);
+  connectWiFi();
+}
+
+void loop() {
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("Status: Terhubung");
+    Serial.print("RSSI (dBm): ");
+    Serial.println(WiFi.RSSI());
+    digitalWrite(ledPin, HIGH);
+  } else {
+    Serial.println("Status: Terputus");
+    digitalWrite(ledPin, LOW);
+    if (millis() - lastReconnect >= reconnectInterval) {
+      lastReconnect = millis();
+      Serial.println("Mencoba reconnect...");
+      connectWiFi();
+    }
+  }
+  delay(5000);
+}

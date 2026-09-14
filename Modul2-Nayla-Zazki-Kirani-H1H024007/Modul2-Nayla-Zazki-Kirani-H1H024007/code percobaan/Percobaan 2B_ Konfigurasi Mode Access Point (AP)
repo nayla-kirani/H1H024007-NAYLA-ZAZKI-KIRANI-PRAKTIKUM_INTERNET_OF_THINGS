@@ -1,0 +1,38 @@
+#include <ESP8266WiFi.h>
+
+// Identitas praktikan: Nayla Zazki Kirani (H1H024007)
+const char* ap_ssid     = "NAYLA_IOT_AP";
+const char* ap_password = "NaylaIoT2026"; // minimal 8 karakter
+
+const int ledPin = 2;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, LOW);
+
+  // Mengatur ESP sebagai Access Point.
+  WiFi.mode(WIFI_AP);
+  bool apStarted = WiFi.softAP(ap_ssid, ap_password);
+
+  if (apStarted) {
+    IPAddress apIP = WiFi.softAPIP();
+    Serial.println("Access Point aktif!");
+    Serial.print("SSID       : ");
+    Serial.println(ap_ssid);
+    Serial.print("IP Address : ");
+    Serial.println(apIP);
+    Serial.print("MAC Address: ");
+    Serial.println(WiFi.softAPmacAddress());
+    digitalWrite(ledPin, HIGH);
+  } else {
+    Serial.println("Access Point gagal dibuat.");
+  }
+}
+
+void loop() {
+  int jumlahClient = WiFi.softAPgetStationNum();
+  Serial.print("Jumlah perangkat terhubung: ");
+  Serial.println(jumlahClient);
+  delay(5000);
+}
