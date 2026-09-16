@@ -278,8 +278,8 @@ Contoh payload:
 
 ### Percobaan 3A
 
-![Dokumentasi Percobaan 3A](Dokumentasi/Dokumentasi-Percobaan3A.jpg)
+[![Dokumentasi Percobaan 3A](Dokumentasi/Dokumentasi-Percobaan3A.jpg)](https://drive.google.com/drive/folders/1fwxat9GcEHR9K5VbgMMQqpaUJNix45-k?usp=sharing)
 
 ### Percobaan 3B
 
-![Dokumentasi Percobaan 3B](Dokumentasi/Dokumentasi-Percobaan3B.jpg)
+[![Dokumentasi Percobaan 3B](Dokumentasi/Dokumentasi-Percobaan3B.jpg)](https://drive.google.com/drive/folders/1fwxat9GcEHR9K5VbgMMQqpaUJNix45-k?usp=sharing)
